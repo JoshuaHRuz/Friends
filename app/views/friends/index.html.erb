@@ -4,6 +4,7 @@
 
 <div id="friends" style="display: flex;">
   <% @friends.each do |friend| %>
+    <% if friend.user == current_user %>
     <div class="card" id="<%= dom_id friend %>" style="width:40%; margin:5px;">
   <div class="card-body">  
     <p>
@@ -30,13 +31,17 @@
       <strong>Twitter:</strong>
       <%= friend.twitter %>
     </p>
-    <p>
-    <%= link_to "Show this friend", friend, class:"btn btn-secondary" %>
-  </p>
+    <% if friend.user_id == current_user.id %>
+      <p>
+      <%= link_to "Show this friend", friend, class:"btn btn-secondary" %>
+      </p>
+    <% end %>
   </div>
-</div>
-
   <% end %>
 </div>
 
-<%= link_to "New friend", new_friend_path, class:"btn btn-secondary" %>
+  <% end %>
+  </br>
+  <%= link_to "New friend", new_friend_path, class:"btn btn-secondary" %>
+  </div>
+
