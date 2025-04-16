@@ -1,47 +1,37 @@
 <% content_for :title, "Friends" %>
-
-<h1>Friends List</h1>
-
-<div id="friends" style="display: flex;">
-  <% @friends.each do |friend| %>
-    <% if friend.user == current_user %>
-    <div class="card" id="<%= dom_id friend %>" style="width:40%; margin:5px;">
-  <div class="card-body">  
-    <p>
-      <strong class="card-title">First name:</strong>
-      <%= friend.first_name %>
-    </p>
-
-    <p class="card-text">
-      <strong>Last name:</strong>
-      <%= friend.last_name %>
-    </p>
-
-    <p  class="card-text">
-      <strong>Email:</strong>
-      <%= friend.email %>
-    </p>
-
-    <p  class="card-text">
-      <strong>Phone:</strong>
-      <%= friend.phone %>
-    </p>
-
-    <p  class="card-text">
-      <strong>Twitter:</strong>
-      <%= friend.twitter %>
-    </p>
-    <% if friend.user_id == current_user.id %>
-      <p>
-      <%= link_to "Show this friend", friend, class:"btn btn-secondary" %>
-      </p>
+<% if user_signed_in? %>
+<h1>Friends List
+<%= link_to "New friend", new_friend_path, class:"btn btn-secondary"%>
+</h1>
+  <div id="friends" style="display: flex;">
+    <% @friends.each do |friend| %>
+      <% if friend.user == current_user %>
+        <div class="card" id="<%= dom_id friend %>" style="width:40%; margin:5px;">
+          <div class="card-body">  
+            <p>
+              <%= link_to friend.first_name + " " + friend.last_name, friend,  class:"btn btn-outline-dark"  %>
+            </p>
+            <p  class="card-text">
+              <strong>Email:</strong>
+              <%= friend.email %>
+            </p>
+            <p  class="card-text">
+              <strong>Phone:</strong>
+              <%= friend.phone %>
+            </p>
+            <p  class="card-text">
+              <strong>Twitter:</strong>
+              <%= friend.twitter %>
+            </p>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-  </div>
-  <% end %>
-</div>
-
-  <% end %>
-  </br>
-  <%= link_to "New friend", new_friend_path, class:"btn btn-secondary" %>
-  </div>
-
+    </br>
+    </div>
+<% else %>
+  <h1>Welcome to the Friends List</h1>
+  <p>Please log in to see your friends list.</p>
+  <p><%= link_to "Log in", new_user_session_path, class:"btn btn-secondary" %></p>
+  <p><%= link_to "Sign up", new_user_registration_path, class:"btn btn-secondary" %></p>
+<% end %>
